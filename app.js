@@ -15,7 +15,7 @@ app.use(cookieParser());
 
 const cookieOptions = {
         httpOnly: true,  
-        secure: true,          
+        // secure: true,          
         sameSite: 'None',      
         path: '/',     
   };
@@ -50,7 +50,8 @@ app.use(passport.session());
 
 
 app.use(cors({
-    origin: "https://chartdatafrontend.netlify.app",
+    origin: "http://localhost:5173",
+    // origin: "https://chartdatafrontend.netlify.app",
     methods: 'GET, POST, PUT, DELETE',
     credentials: true
 }));
@@ -145,7 +146,11 @@ app.get('/user', (req, res)=>{
 
 app.get('/logout', (req,res)=>{
     try {
-        res.clearCookie('user')
+        res.clearCookie('user', {
+            path: '/',          
+            secure: true,    
+            httpOnly: true, 
+        })
         res.json("logout successfull!")  
     } catch (error) {
         console.log(error)

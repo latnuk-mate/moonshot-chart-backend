@@ -42,7 +42,7 @@ app.use(passport.session());
 
 
 app.use(cors({
-    origin: "*",
+    origin: "https://chartdatafrontend.netlify.app",
     credentials: true
 }));
 

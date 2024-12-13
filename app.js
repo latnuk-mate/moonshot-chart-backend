@@ -16,7 +16,8 @@ app.use(cookieParser());
 const cookieOptions = {
         httpOnly: true,  
         secure: true,          
-        sameSite: 'Lax',       
+        sameSite: 'None',
+        domain: '.onrender.com',       
         path: '/',     
   };
 
@@ -51,6 +52,7 @@ app.use(passport.session());
 
 app.use(cors({
     origin: "https://chartdatafrontend.netlify.app",
+    methods: 'GET, POST, PUT, DELETE',
     credentials: true
 }));
 

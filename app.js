@@ -16,8 +16,7 @@ app.use(cookieParser());
 const cookieOptions = {
         httpOnly: true,  
         secure: true,          
-        sameSite: 'None',
-        domain: '.onrender.com',       
+        sameSite: 'None',      
         path: '/',     
   };
 

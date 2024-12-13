@@ -10,7 +10,15 @@ const usermodel = require('./Model/user');
 const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
 const app = express();
-app.use(cookieParser())
+app.use(cookieParser());
+
+
+const cookieOptions = {
+        httpOnly: true,  
+        secure: true,          
+        sameSite: 'Lax',       
+        path: '/',     
+  };
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
@@ -68,10 +76,7 @@ app.post('/save', (req,res)=>{
     }
 
     try {
-        res.cookie('data', JSON.stringify(data), {
-            httpOnly: true,      
-            SameSite: 'Lax'     
-          });
+        res.cookie('data', JSON.stringify(data), cookieOptions);
         res.json('data saved successfully!');
     } catch (error) {
         console.log(error)
@@ -94,7 +99,7 @@ app.post('/login', (req, res, next) => {
         if (err) {
           return res.status(500).json( 'Failed to log in user' );
         }else{
-            res.cookie('user', JSON.stringify(req.user));
+            res.cookie('user', JSON.stringify(req.user), cookieOptions);
              res.json(user);
         }
 
@@ -117,7 +122,7 @@ app.post('/login', (req, res, next) => {
       
           await user.save();
         // to store sensitive informatin we can encrypt before storing..
-          res.cookie('user', JSON.stringify(user)) //set the consistent user...
+          res.cookie('user', JSON.stringify(user), cookieOptions) //set the consistent user...
           res.json(user); // sent to user..
       }
       catch(err){

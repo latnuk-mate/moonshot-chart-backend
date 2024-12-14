@@ -12,10 +12,10 @@ const mongoose = require('mongoose');
 const app = express();
 app.use(cookieParser());
 
-
+// for dev env
 const cookieOptions = {
         httpOnly: true,  
-        // secure: true,          
+        secure: true,          
         sameSite: 'None',      
         path: '/',     
   };
@@ -50,8 +50,7 @@ app.use(passport.session());
 
 
 app.use(cors({
-    origin: "http://localhost:5173",
-    // origin: "https://chartdatafrontend.netlify.app",
+    origin: "https://chartdatafrontend.netlify.app",
     methods: 'GET, POST, PUT, DELETE',
     credentials: true
 }));
@@ -135,10 +134,12 @@ app.post('/login', (req, res, next) => {
 
 
 app.get('/user', (req, res)=>{
-    const user = req.cookies.user != undefined ? JSON.parse(req.cookies.user) : null;
+    const user = req.cookies.user !== undefined ? JSON.parse(req.cookies.user) : null;
     if(user){
-        res.json(user)
-    }    
+        res.json({user : user})
+    }else{
+        res.json({user : null})
+    }   
 });
 
 

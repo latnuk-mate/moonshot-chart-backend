@@ -150,7 +150,8 @@ app.get('/logout', (req,res)=>{
         res.clearCookie('user', {
             path: '/',          
             secure: true,    
-            httpOnly: true, 
+            httpOnly: true,
+            sameSite: "None" 
         })
         res.json("logout successfull!")  
     } catch (error) {
